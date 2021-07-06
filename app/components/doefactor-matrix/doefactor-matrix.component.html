@@ -1,0 +1,37 @@
+
+<!-- <div style="padding: 1vw"> -->
+    
+    <p>Create DOE Factor Matrix</p>
+    <button mat-icon-button color="primary"
+        (click) = "addFactor();">
+        <mat-icon>add</mat-icon>
+    </button>
+    <div *ngFor = 'let factor of inputFactorMatrix, index as i'>
+      <form>
+        <mat-form-field>
+          <input type="text" matInput [matAutocomplete] = "auto" />
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor='let option of options' [value]="option"
+              (click)="addChannel(option, i);">
+              {{factor.channel}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+    </div>
+
+
+<!-- </div> -->
+
+
+
+<!-- <form>
+  <mat-form-field>
+    <input type="text" matInput [matAutocomplete] = "auto" />
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor='let option of options' [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form> -->

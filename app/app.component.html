@@ -1,4 +1,14 @@
 <mat-toolbar color="primary">
   <span>CSI Tools</span>
 </mat-toolbar>
-<app-selector></app-selector>
+
+<mat-form-field appearance="fill">
+  <mat-label>Select an App</mat-label>
+  <mat-select [(value)]="selectedApp">
+    <mat-option value="DOE Factor Matrix">DOE Factor Matrix</mat-option>
+    <mat-option value="PM Batch Creation">DOE PM Batch Creation</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<app-doefactor-matrix *ngIf="selectedApp==='DOE Factor Matrix'"></app-doefactor-matrix>
+
