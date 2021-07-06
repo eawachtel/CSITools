@@ -26,6 +26,7 @@ export class DOEFactorMatrixComponent implements OnInit {
 
   addChannel(channel:string, i:number) {
     this.inputFactorMatrix[i].channel = channel;
+    console.log(this.inputFactorMatrix)
   }
 
   

@@ -13,7 +13,7 @@
           <mat-autocomplete #auto="matAutocomplete">
             <mat-option *ngFor='let option of options' [value]="option"
               (click)="addChannel(option, i);">
-              {{factor.channel}}
+              {{option}}
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
