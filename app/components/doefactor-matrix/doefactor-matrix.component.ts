@@ -3,6 +3,8 @@ import {FormControl} from '@angular/forms'
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 
+import { ExportToCsv } from 'export-to-csv';
+
 import { doeInputFactor } from '../../interfaces/interfaces'
 import {inputDisplayNames} from '../../external-data/display-channel-list'
 
@@ -16,24 +18,33 @@ export class DOEFactorMatrixComponent implements OnInit {
   inputFactorMatrix: doeInputFactor[] = [];
   lowValue = '';
   highValue = '';
-  options = inputDisplayNames;
-  myControl = new FormControl();
-  filteredOptions: Observable<string[]> | undefined;
-
+  channelOptions = inputDisplayNames;
+  // myControl = new FormControl();
+  // filteredOptions: Observable<string[]> | undefined;
+  channelOptionsAll = this.channelOptions;
   constructor() { }
 
+  onKey(value: any) { 
+    this.channelOptionsAll = this.search(value);
+    }
+
+  search(value: string) { 
+    let filter = value.toLowerCase();
+    return this.channelOptions.filter(option => option.toLowerCase().startsWith(filter));
+  }
+
   ngOnInit(): void {
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map((value: string) => this._filter(value))
-    );
+    // this.filteredOptions = this.myControl.valueChanges.pipe(
+    //   startWith(''),
+    //   map((value: string) => this._filter(value))
+    // );
   }
   
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
+  // private _filter(value: string): string[] {
+  //   const filterValue = value.toLowerCase();
 
-    return this.options.filter(option => option.toLowerCase().includes(filterValue));
-  }
+  //   return this.options.filter(option => option.toLowerCase().includes(filterValue));
+  // }
 
   addFactor(){
     let factorObj: doeInputFactor = {channel:'', unit:'', low: null, high: null};
@@ -61,4 +72,25 @@ export class DOEFactorMatrixComponent implements OnInit {
   }
 
   importFactorMatrix(){}
+
+  exportFactorMatrix(){
+    const options = { 
+      fieldSeparator: ',',
+      filename: 'DOEInputFactorTable',
+      quoteStrings: '"',
+      decimalSeparator: '.',
+      showLabels: false, 
+      showTitle: false,
+      title: 'My Awesome CSV',
+      useTextFile: false,
+      useBom: true,
+      useKeysAsHeaders: false,
+      // headers: ['Column 1', 'Column 2', etc...] <-- Won't work with useKeysAsHeaders present!
+    };
+   
+  const csvExporter = new ExportToCsv(options);
+   
+  csvExporter.generateCsv(this.inputFactorMatrix);
+  }
+
 }

@@ -12,24 +12,22 @@
         <button mat-raised-button color="primary">Import</button>
       </div>
       <div class="col-sm-1">
-        <button mat-raised-button color="primary">Export</button>
+        <button mat-raised-button color="primary" (click) = "exportFactorMatrix();">Export</button>
       </div>
   </div>
 </div>
 <div class='container-fluid m-2'>
   <div *ngFor = 'let factor of inputFactorMatrix, index as i' class="row align-items-center">
     
-    <form>
-      <mat-form-field appearance="outline">
-        <mat-label>Factor Name</mat-label>
-        <input type="text" matInput [formControl] = "myControl" [matAutocomplete]="auto" />
-        <mat-autocomplete  #auto="matAutocomplete">
-          <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="addChannel(option, i)">
-            {{option}}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-    </form>
+    <mat-form-field class="example-form-field" appearance="outline">
+      <mat-label>Factor Name</mat-label>
+      <mat-select>
+        <input [(ngModel)]="factor.channel" (keyup)="onKey(factor.channel)">
+        <mat-option *ngFor="let channel of channelOptionsAll" [value]="channel" (click)="addChannel(channel, i)">{{channel}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    
 
     <mat-form-field class="example-form-field" appearance="outline">
       <mat-label>Low Value</mat-label>
