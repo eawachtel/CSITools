@@ -1,39 +1,47 @@
 
-<div style="padding: 1vw">
-    
+<div class="container-fluid m-2">
     <p>Create DOE Factor Matrix</p>
     <button mat-icon-button color="primary"
         (click) = "addFactor();">
         <mat-icon>add</mat-icon>
     </button>
-
-    <div *ngFor = 'let factor of inputFactorMatrix, index as i' class="row align-items-center">
-      {{factor.factorIndex}}
-      <form>
-        <mat-form-field appearance="outline">
-          <input type="text" matInput [matAutocomplete] = "auto" [formControl] = "myControl" [matAutocomplete]="auto" />
-          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-            <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="addChannel(option, i)">
-              {{option}}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-      </form>
-
-      <mat-form-field class="example-form-field" appearance="outline">
-        <mat-label>Low Value</mat-label>
-        <input matInput type="text" [(ngModel)]="lowValue" (keyup)="addLowValue(lowValue, i);">
-      </mat-form-field>
-
-      <mat-form-field class="example-form-field" appearance="outline">
-        <mat-label>High Value</mat-label>
-        <input matInput type="text" [(ngModel)]="highValue" (keyup)="addHighValue(highValue, i);">
-      </mat-form-field>
-      
-    </div>
-
-
 </div>
+<div class='container-fluid m-2'>
+  <div *ngFor = 'let factor of inputFactorMatrix, index as i' class="row align-items-center">
+    
+    <form>
+      <mat-form-field appearance="outline">
+        <input type="text" matInput [matAutocomplete]="auto" />
+        <mat-autocomplete  #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="addChannel(option, i)">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+
+    <mat-form-field class="example-form-field" appearance="outline">
+      <mat-label>Low Value</mat-label>
+      <input matInput type="text" [(ngModel)]="factor.low">
+    </mat-form-field>
+
+    <mat-form-field class="example-form-field" appearance="outline">
+      <mat-label>High Value</mat-label>
+      <input matInput type="text" [(ngModel)]="factor.high">
+    </mat-form-field>
+    
+    <div class="align-items-center pb-3">
+      <button  mat-icon-button color="primary"
+          (click) = "deleteFactor(i);">
+          <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    
+  </div>
+</div>
+
+
+
 
 
 

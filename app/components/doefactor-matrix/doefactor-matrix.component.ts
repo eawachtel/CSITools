@@ -36,9 +36,13 @@ export class DOEFactorMatrixComponent implements OnInit {
   }
 
   addFactor(){
-    let factorObj: doeInputFactor = {factorIndex: 'Factor:', channel:'', unit:'', low: null, high: null};
+    let factorObj: doeInputFactor = {index: null, channel:'', unit:'', low: null, high: null};
     this.inputFactorMatrix.push(factorObj);
     console.log(this.inputFactorMatrix)
+  }
+
+  deleteFactor(i:number){
+    this.inputFactorMatrix.splice(i, 1);
   }
 
   addChannel(channel:string, i:number) {
@@ -55,4 +59,6 @@ export class DOEFactorMatrixComponent implements OnInit {
     this.inputFactorMatrix[i].high = +highValue;
     console.log(this.inputFactorMatrix)
   }
+
+  
 }
