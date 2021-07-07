@@ -1,17 +1,28 @@
 
 <div class="container-fluid m-2">
     <p>Create DOE Factor Matrix</p>
-    <button mat-icon-button color="primary"
-        (click) = "addFactor();">
-        <mat-icon>add</mat-icon>
-    </button>
+    <div class='row'>
+      <div class="col-sm-1">
+        <button mat-icon-button color="primary"
+            (click) = "addFactor();">
+            <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <div class="col-sm-1">
+        <button mat-raised-button color="primary">Import</button>
+      </div>
+      <div class="col-sm-1">
+        <button mat-raised-button color="primary">Export</button>
+      </div>
+  </div>
 </div>
 <div class='container-fluid m-2'>
   <div *ngFor = 'let factor of inputFactorMatrix, index as i' class="row align-items-center">
     
     <form>
       <mat-form-field appearance="outline">
-        <input type="text" matInput [matAutocomplete]="auto" />
+        <mat-label>Factor Name</mat-label>
+        <input type="text" matInput [formControl] = "myControl" [matAutocomplete]="auto" />
         <mat-autocomplete  #auto="matAutocomplete">
           <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="addChannel(option, i)">
             {{option}}

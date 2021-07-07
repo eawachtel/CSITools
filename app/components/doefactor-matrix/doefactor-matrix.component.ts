@@ -36,7 +36,7 @@ export class DOEFactorMatrixComponent implements OnInit {
   }
 
   addFactor(){
-    let factorObj: doeInputFactor = {index: null, channel:'', unit:'', low: null, high: null};
+    let factorObj: doeInputFactor = {channel:'', unit:'', low: null, high: null};
     this.inputFactorMatrix.push(factorObj);
     console.log(this.inputFactorMatrix)
   }
@@ -60,5 +60,5 @@ export class DOEFactorMatrixComponent implements OnInit {
     console.log(this.inputFactorMatrix)
   }
 
-  
+  importFactorMatrix(){}
 }
