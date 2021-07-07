@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import {FormControl} from '@angular/forms'
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 import { doeInputFactor } from '../../interfaces/interfaces'
-
+import {inputDisplayNames} from '../../external-data/display-channel-list'
 
 @Component({
   selector: 'app-doefactor-matrix',
@@ -11,17 +14,31 @@ import { doeInputFactor } from '../../interfaces/interfaces'
 export class DOEFactorMatrixComponent implements OnInit {
 
   inputFactorMatrix: doeInputFactor[] = [];
-  options: string[] = ['Angular', 'React', 'Vue'];
+  lowValue = '';
+  highValue = '';
+  options = inputDisplayNames;
+  myControl = new FormControl();
+  filteredOptions: Observable<string[]> | undefined;
 
   constructor() { }
 
   ngOnInit(): void {
-    
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map((value: string) => this._filter(value))
+    );
+  }
+  
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   addFactor(){
-    let factorObj: doeInputFactor = {channel:'', unit:'', low: null, high: null};
+    let factorObj: doeInputFactor = {factorIndex: 'Factor:', channel:'', unit:'', low: null, high: null};
     this.inputFactorMatrix.push(factorObj);
+    console.log(this.inputFactorMatrix)
   }
 
   addChannel(channel:string, i:number) {
@@ -29,5 +46,13 @@ export class DOEFactorMatrixComponent implements OnInit {
     console.log(this.inputFactorMatrix)
   }
 
-  
+  addLowValue(lowValue:string, i: number) {
+    this.inputFactorMatrix[i].low = +lowValue;
+    console.log(this.inputFactorMatrix)
+  }
+
+  addHighValue(highValue:string, i: number) {
+    this.inputFactorMatrix[i].high = +highValue;
+    console.log(this.inputFactorMatrix)
+  }
 }
