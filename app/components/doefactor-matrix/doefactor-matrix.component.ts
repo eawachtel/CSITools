@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl} from '@angular/forms'
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
 
+import * as Papa from 'papaparse';
 import { ExportToCsv } from 'export-to-csv';
 
 import { doeInputFactor } from '../../interfaces/interfaces'
 import {inputDisplayNames} from '../../external-data/display-channel-list'
+
+interface papaParseInterface {
+  data: doeInputFactor[];
+  errors: any[];
+  meta: {}
+}
 
 @Component({
   selector: 'app-doefactor-matrix',
@@ -15,15 +19,17 @@ import {inputDisplayNames} from '../../external-data/display-channel-list'
 })
 export class DOEFactorMatrixComponent implements OnInit {
 
-  inputFactorMatrix: doeInputFactor[] = [];
+  inputFactorMatrix: any[] = [];
   lowValue = '';
   highValue = '';
   channelOptions = inputDisplayNames;
-  // myControl = new FormControl();
-  // filteredOptions: Observable<string[]> | undefined;
   channelOptionsAll = this.channelOptions;
-  constructor() { }
-
+  
+  constructor() { 
+    
+  }
+  
+  
   onKey(value: any) { 
     this.channelOptionsAll = this.search(value);
     }
@@ -34,20 +40,10 @@ export class DOEFactorMatrixComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.filteredOptions = this.myControl.valueChanges.pipe(
-    //   startWith(''),
-    //   map((value: string) => this._filter(value))
-    // );
   }
-  
-  // private _filter(value: string): string[] {
-  //   const filterValue = value.toLowerCase();
-
-  //   return this.options.filter(option => option.toLowerCase().includes(filterValue));
-  // }
 
   addFactor(){
-    let factorObj: doeInputFactor = {channel:'', unit:'', low: null, high: null};
+    let factorObj: any = {channel:'', unit:'', low: null, high: null};
     this.inputFactorMatrix.push(factorObj);
     console.log(this.inputFactorMatrix)
   }
@@ -71,8 +67,21 @@ export class DOEFactorMatrixComponent implements OnInit {
     console.log(this.inputFactorMatrix)
   }
 
-  importFactorMatrix(){}
-
+  public  fileChangeListener(files: any) {
+    let file = files.target.files[0]
+    this.inputFactorMatrix = []
+    if (file) {
+      Papa.parse(file, {
+        header: true,
+        skipEmptyLines: true,
+        complete: (result) => {
+          console.log(result.data)
+          this.inputFactorMatrix = result.data;
+        }});
+    } else {
+      alert('Problem loading CSV file');
+    }
+  }
   exportFactorMatrix(){
     const options = { 
       fieldSeparator: ',',
@@ -84,7 +93,7 @@ export class DOEFactorMatrixComponent implements OnInit {
       title: 'My Awesome CSV',
       useTextFile: false,
       useBom: true,
-      useKeysAsHeaders: false,
+      useKeysAsHeaders: true,
       // headers: ['Column 1', 'Column 2', etc...] <-- Won't work with useKeysAsHeaders present!
     };
    

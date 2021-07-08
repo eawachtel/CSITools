@@ -8,9 +8,29 @@
             <mat-icon>add</mat-icon>
         </button>
       </div>
-      <div class="col-sm-1">
-        <button mat-raised-button color="primary">Import</button>
-      </div>
+
+      <!-- <div class="col-sm-1">
+        <button mat-raised-button color="primary" (click)="fileInput.click()">Import</button>
+        <input hidden (change)="onFileSelected($event)" #fileInput type="file">
+      </div> -->
+
+      <div class="form-group">
+        <label for="file">Choose File</label>
+        <input type="file"
+               id="file"
+               (change)="fileChangeListener($event)">
+    </div>
+                  
+      <!-- <input id='browser' type='file' style='display:none'
+            (change)="fileChangeListener($event)" accept=".csv"> 
+            <button
+                id='browser' 
+                onclick= "document.getElementById('browser').click()">
+                Import
+            </button> -->
+
+
+
       <div class="col-sm-1">
         <button mat-raised-button color="primary" (click) = "exportFactorMatrix();">Export</button>
       </div>
