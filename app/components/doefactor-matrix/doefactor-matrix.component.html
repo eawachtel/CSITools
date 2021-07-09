@@ -9,63 +9,70 @@
         </button>
       </div>
 
-      <!-- <div class="col-sm-1">
-        <button mat-raised-button color="primary" (click)="fileInput.click()">Import</button>
-        <input hidden (change)="onFileSelected($event)" #fileInput type="file">
-      </div> -->
-
-      <div class="form-group">
-        <label for="file">Choose File</label>
-        <input type="file"
-               id="file"
-               (change)="fileChangeListener($event)">
-    </div>
-                  
       <!-- <input id='browser' type='file' style='display:none'
-            (change)="fileChangeListener($event)" accept=".csv"> 
-            <button
+            (change)="fileChangeListener($event.target.files)" accept=".csv">
+            <button kendoButton class="mx-2 navbar-button"
                 id='browser' 
                 onclick= "document.getElementById('browser').click()">
                 Import
             </button> -->
 
+            <div>
+              
+              <input type="file"
+                     id="browser"
+                     style='display:none'
+                     accept=".csv"
+                     (change)="fileChangeListener($event)">
+              <button mat-raised-button color="primary" 
+              onclick= "document.getElementById('browser').click()"
+                id='browser'>Import</button>
+            </div>
 
-
+      <!-- <div class="form-group">
+        <label for="file">Choose File</label>
+        <input type="file"
+               id="file"
+               (change)="fileChangeListener($event)">
+      </div> -->
+                  
       <div class="col-sm-1">
         <button mat-raised-button color="primary" (click) = "exportFactorMatrix();">Export</button>
       </div>
   </div>
 </div>
+
 <div class='container-fluid m-2'>
-  <div *ngFor = 'let factor of inputFactorMatrix, index as i' class="row align-items-center">
-    
-    <mat-form-field class="example-form-field" appearance="outline">
-      <mat-label>Factor Name</mat-label>
-      <mat-select>
-        <input [(ngModel)]="factor.channel" (keyup)="onKey(factor.channel)">
-        <mat-option *ngFor="let channel of channelOptionsAll" [value]="channel" (click)="addChannel(channel, i)">{{channel}}</mat-option>
-      </mat-select>
-    </mat-form-field>
+  <div *ngFor = 'let factor of inputFactorMatrix, index as i' class="align-items-center">
+       
+    <div class='row'>
+            
+      <mat-form-field class="example-form-field" appearance="outline">
+        <mat-label>Factor Name</mat-label>
+        <mat-select [(ngModel)] = "factor.channel">
+          <mat-option *ngFor="let channel of channelOptionsFiltered" [value]="channel">{{channel}}</mat-option> 
+        </mat-select> 
+      </mat-form-field>
 
     
 
-    <mat-form-field class="example-form-field" appearance="outline">
-      <mat-label>Low Value</mat-label>
-      <input matInput type="text" [(ngModel)]="factor.low">
-    </mat-form-field>
+      <mat-form-field class="example-form-field" appearance="outline">
+        <mat-label>Low Value</mat-label>
+        <input matInput type="text" [(ngModel)]="factor.low">
+      </mat-form-field>
 
-    <mat-form-field class="example-form-field" appearance="outline">
-      <mat-label>High Value</mat-label>
-      <input matInput type="text" [(ngModel)]="factor.high">
-    </mat-form-field>
+      <mat-form-field class="example-form-field" appearance="outline">
+        <mat-label>High Value</mat-label>
+        <input matInput type="text" [(ngModel)]="factor.high">
+      </mat-form-field>
     
-    <div class="align-items-center pb-3">
-      <button  mat-icon-button color="primary"
+    <!-- <div class="align-items-center pb-3"> -->
+      <button  class="align-items-center pb-3" mat-icon-button color="primary"
           (click) = "deleteFactor(i);">
           <mat-icon>close</mat-icon>
       </button>
+    <!-- </div> -->
     </div>
-    
   </div>
 </div>
 

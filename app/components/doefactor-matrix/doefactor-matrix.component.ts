@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 import * as Papa from 'papaparse';
 import { ExportToCsv } from 'export-to-csv';
@@ -6,11 +8,6 @@ import { ExportToCsv } from 'export-to-csv';
 import { doeInputFactor } from '../../interfaces/interfaces'
 import {inputDisplayNames} from '../../external-data/display-channel-list'
 
-interface papaParseInterface {
-  data: doeInputFactor[];
-  errors: any[];
-  meta: {}
-}
 
 @Component({
   selector: 'app-doefactor-matrix',
@@ -22,16 +19,26 @@ export class DOEFactorMatrixComponent implements OnInit {
   inputFactorMatrix: any[] = [];
   lowValue = '';
   highValue = '';
-  channelOptions = inputDisplayNames;
-  channelOptionsAll = this.channelOptions;
-  
+  channelOptions:string[] = inputDisplayNames;
+  channelOptionsFiltered: string[] | undefined = this.channelOptions; 
+  test:string = 'test'
+  showSearch:boolean = false;
+  searchString!:string
+
   constructor() { 
     
   }
   
-  
-  onKey(value: any) { 
-    this.channelOptionsAll = this.search(value);
+  onMatSelect(){
+    this.showSearch = !this.showSearch;
+    console.log(this.showSearch)
+  }
+
+  onKey(event: any) { 
+    let value2 = event.target.value;
+    this.channelOptionsFiltered = this.search(value2);
+    console.log('on key', this.inputFactorMatrix)
+    console.log('on key', this.channelOptionsFiltered)
     }
 
   search(value: string) { 
@@ -40,8 +47,10 @@ export class DOEFactorMatrixComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
   }
 
+  
   addFactor(){
     let factorObj: any = {channel:'', unit:'', low: null, high: null};
     this.inputFactorMatrix.push(factorObj);
@@ -77,11 +86,13 @@ export class DOEFactorMatrixComponent implements OnInit {
         complete: (result) => {
           console.log(result.data)
           this.inputFactorMatrix = result.data;
+          console.log(this.inputFactorMatrix)
         }});
     } else {
       alert('Problem loading CSV file');
     }
   }
+
   exportFactorMatrix(){
     const options = { 
       fieldSeparator: ',',
