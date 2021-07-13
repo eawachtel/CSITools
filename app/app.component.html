@@ -12,6 +12,8 @@
     </mat-select>
   </mat-form-field>
 </div>
-<div>
-  <app-doefactor-matrix *ngIf="selectedApp ==='DOE Factor Matrix'"></app-doefactor-matrix>
+
+<div class="column">
+  <doefactor-matrix *ngIf="selectedApp ==='DOE Factor Matrix'"></doefactor-matrix>
+  <batch-creation *ngIf="selectedApp ==='PM Batch Creation'"></batch-creation>
 </div>

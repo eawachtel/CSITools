@@ -1,79 +1,61 @@
 
-<div class="container-fluidb">
+<div class="flex-column">
     <p>Create DOE Factor Matrix</p>
-    <div class='row'>
-      <div class="col-sm-1">
+    <div class='flex-row'>
+      <span>
         <button mat-icon-button color="primary"
             (click) = "addFactor();">
             <mat-icon>add</mat-icon>
         </button>
-      </div>
-
-      <!-- <input id='browser' type='file' style='display:none'
-            (change)="fileChangeListener($event.target.files)" accept=".csv">
-            <button kendoButton class="mx-2 navbar-button"
-                id='browser' 
-                onclick= "document.getElementById('browser').click()">
-                Import
-            </button> -->
-
-            <div>
-              
-              <input type="file"
-                     id="browser"
-                     style='display:none'
-                     accept=".csv"
-                     (change)="fileChangeListener($event)">
-              <button mat-raised-button color="primary" 
-              onclick= "document.getElementById('browser').click()"
-                id='browser'>Import</button>
-            </div>
-
-      <!-- <div class="form-group">
-        <label for="file">Choose File</label>
+      </span>
         <input type="file"
-               id="file"
-               (change)="fileChangeListener($event)">
-      </div> -->
-                  
-      <div class="col-sm-1">
-        <button mat-raised-button color="primary" (click) = "exportFactorMatrix();">Export</button>
-      </div>
+                      id="browser"
+                      style='display:none'
+                      accept=".csv"
+                      (change)="fileChangeListener($event)">
+      <span>
+          <button mat-raised-button color="primary" 
+            onclick= "document.getElementById('browser').click()"
+              id='browser'>Import
+          </button>
+      </span>
+      <span>
+        <button mat-raised-button color="primary"
+          (click) = "exportFactorMatrix();">Export
+        </button>
+      </span>
   </div>
 </div>
 
-<div class='container-fluid m-2' style="height: 70vh; overflow-y: auto;">
-  <div *ngFor = 'let factor of inputFactorMatrix, index as i' class="align-items-center">
-       
-    <div class='row'>
-            
-      <mat-form-field class="example-form-field" appearance="outline">
-        <mat-label>Factor Name</mat-label>
-        <mat-select [(ngModel)] = "factor.channel">
-          <mat-option *ngFor="let channel of channelOptionsFiltered" [value]="channel">{{channel}}</mat-option> 
-        </mat-select> 
-      </mat-form-field>
-
-    
-
-      <mat-form-field class="example-form-field" appearance="outline">
-        <mat-label>Low Value</mat-label>
-        <input matInput type="text" [(ngModel)]="factor.low">
-      </mat-form-field>
-
-      <mat-form-field class="example-form-field" appearance="outline">
-        <mat-label>High Value</mat-label>
-        <input matInput type="text" [(ngModel)]="factor.high">
-      </mat-form-field>
-    
-    <!-- <div class="align-items-center pb-3"> -->
-      <button  class="align-items-center pb-3" mat-icon-button color="primary"
-          (click) = "deleteFactor(i);">
-          <mat-icon>close</mat-icon>
-      </button>
-    <!-- </div> -->
+<div class = "flex-column">
+    <div class="flex-row" *ngFor = 'let factor of inputFactorMatrix, index as i'>
+      <span>
+        <mat-form-field appearance="outline">
+          <mat-label>Factor Name</mat-label>
+          <mat-select [(ngModel)] = "factor.channel">
+            <mat-option *ngFor="let channel of channelOptionsFiltered" [value]="channel">{{channel}}</mat-option> 
+          </mat-select> 
+        </mat-form-field>
+      </span>
+      <span>
+        <mat-form-field appearance="outline">
+          <mat-label>Low Value</mat-label>
+          <input matInput type="text" [(ngModel)]="factor.low">
+        </mat-form-field>
+      </span>
+      <span>
+        <mat-form-field appearance="outline">
+          <mat-label>High Value</mat-label>
+          <input matInput type="text" [(ngModel)]="factor.high">
+        </mat-form-field>
+      </span>
+      <span>
+        <button  mat-icon-button color="primary"
+            (click) = "deleteFactor(i);">
+            <mat-icon>close</mat-icon>
+        </button>
+      </span>
     </div>
-  </div>
 </div>
 
 

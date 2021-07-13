@@ -12,7 +12,6 @@ import {MatInputModule} from '@angular/material/input'
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 import { DOEFactorMatrixComponent } from './components/doefactor-matrix/doefactor-matrix.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BatchCreationComponent } from './components/batch-creation/batch-creation.component';
 
 @NgModule({
@@ -34,7 +33,7 @@ import { BatchCreationComponent } from './components/batch-creation/batch-creati
     MatButtonModule,
     MatIconModule,
     MatAutocompleteModule,
-    NgbModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

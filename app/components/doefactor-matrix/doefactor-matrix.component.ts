@@ -1,16 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
 
 import * as Papa from 'papaparse';
 import { ExportToCsv } from 'export-to-csv';
 
-import { doeInputFactor } from '../../interfaces/interfaces'
 import {inputDisplayNames} from '../../external-data/display-channel-list'
 
 
 @Component({
-  selector: 'app-doefactor-matrix',
+  selector: 'doefactor-matrix',
   templateUrl: './doefactor-matrix.component.html',
   styleUrls: ['./doefactor-matrix.component.css']
 })
