@@ -109,8 +109,12 @@ export class BatchCreationComponent implements OnInit {
           Object.keys(this.batchDict).forEach((key:any) => {
             let valuesArr = this.batchDict[key]['values'];
             let newValues = '';
-            valuesArr.forEach((element:any) => {
-              newValues = newValues + element.toString()+ ', ' 
+            valuesArr.forEach((element:any, index:number) => {
+              if (index !== 0) {
+              newValues = newValues + ', ' + element.toString()
+              } else {
+                newValues = newValues + element.toString()
+              } 
             });
             this.batchDict[key]['values'] = newValues;
             this.batchMatrix.push(this.batchDict[key])
