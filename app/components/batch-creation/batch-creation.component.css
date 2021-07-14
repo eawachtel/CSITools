@@ -14,3 +14,7 @@
     justify-content: flex-start;
     flex-flow: column wrap;
   }
+
+  span{
+    padding:4px;
+  }

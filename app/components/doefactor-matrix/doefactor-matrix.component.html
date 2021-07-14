@@ -33,7 +33,8 @@
         <mat-form-field appearance="outline">
           <mat-label>Factor Name</mat-label>
           <mat-select [(ngModel)] = "factor.channel">
-            <mat-option *ngFor="let channel of channelOptionsFiltered" [value]="channel">{{channel}}</mat-option> 
+            <input matInput type="text" placeholder= 'Search' (keyup) = "onKey($event, i);">
+            <mat-option *ngFor="let channel of factor.channelOptionsFiltered" (click) = "onChannelSelect(i);" [value]="channel">{{channel}}</mat-option> 
           </mat-select> 
         </mat-form-field>
       </span>

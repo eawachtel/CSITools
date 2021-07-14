@@ -18,40 +18,35 @@ export class DOEFactorMatrixComponent implements OnInit {
   highValue = '';
   channelOptions:string[] = inputDisplayNames;
   channelOptionsFiltered: string[] | undefined = this.channelOptions; 
-  test:string = 'test'
-  showSearch:boolean = false;
-  searchString!:string
+  
 
   constructor() { 
     
   }
   
-  onMatSelect(){
-    this.showSearch = !this.showSearch;
-    console.log(this.showSearch)
-  }
-
-  onKey(event: any) { 
-    let value2 = event.target.value;
-    this.channelOptionsFiltered = this.search(value2);
-    console.log('on key', this.inputFactorMatrix)
-    console.log('on key', this.channelOptionsFiltered)
-    }
-
-  search(value: string) { 
-    let filter = value.toLowerCase();
-    return this.channelOptions.filter(option => option.toLowerCase().startsWith(filter));
-  }
-
+  
   ngOnInit(): void {
     
   }
 
-  
+  onKey(event: any, i:number) { 
+    let value2 = event.target.value;
+    this.inputFactorMatrix[i].channelOptionsFiltered = this.search(value2);
+  }
+
+  search(value: string) { 
+    let filter = value.toLowerCase();
+    return this.channelOptions.filter(option => option.toLowerCase().includes(filter));
+  }
+
   addFactor(){
-    let factorObj: any = {channel:'', unit:'', low: null, high: null};
+    let factorObj: any = {channel:'', unit:'', low: null, high: null, channelOptionsFiltered: this.channelOptions};
     this.inputFactorMatrix.push(factorObj);
-    console.log(this.inputFactorMatrix)
+  }
+
+  onChannelSelect(i:number) {
+    this.inputFactorMatrix[i]['low'] = null
+    this.inputFactorMatrix[i]['high'] = null
   }
 
   deleteFactor(i:number){
@@ -60,30 +55,29 @@ export class DOEFactorMatrixComponent implements OnInit {
 
   addChannel(channel:string, i:number) {
     this.inputFactorMatrix[i].channel = channel;
-    console.log(this.inputFactorMatrix)
   }
 
   addLowValue(lowValue:string, i: number) {
     this.inputFactorMatrix[i].low = +lowValue;
-    console.log(this.inputFactorMatrix)
   }
 
   addHighValue(highValue:string, i: number) {
     this.inputFactorMatrix[i].high = +highValue;
-    console.log(this.inputFactorMatrix)
   }
 
-  public  fileChangeListener(files: any) {
+  public fileChangeListener(files: any) {
     let file = files.target.files[0]
-    this.inputFactorMatrix = []
     if (file) {
+        this.inputFactorMatrix = []
       Papa.parse(file, {
         header: true,
         skipEmptyLines: true,
         complete: (result) => {
-          console.log(result.data)
           this.inputFactorMatrix = result.data;
-          console.log(this.inputFactorMatrix)
+          // Add filtered channel options so instance of object is full with all names avail
+          this.inputFactorMatrix.forEach((element) => {
+            element['channelOptionsFiltered'] = this.channelOptions; 
+          })
         }});
     } else {
       alert('Problem loading CSV file');

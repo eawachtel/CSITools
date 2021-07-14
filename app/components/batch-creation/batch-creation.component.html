@@ -1,1 +1,25 @@
-<p style= "color: black;">batch-creation works!</p>
+<div class="flex-column">
+    <p>
+        <span>Create PM Batch Input</span>
+    </p>
+    
+        
+    <div class='flex-row'>
+      <input type="file"
+                      id="browser"
+                      style='display:none'
+                      accept=".csv"
+                      (change)="fileChangeListener($event)">
+      <span>
+          <button mat-raised-button color="primary" 
+            onclick= "document.getElementById('browser').click()"
+              id='browser'>Import DE Design Matrix csv
+          </button>
+      </span>
+      <!-- <span>
+        <button mat-raised-button color="primary"
+          (click) = "exportFactorMatrix();">Export
+        </button>
+      </span> -->
+  </div>
+</div>
