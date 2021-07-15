@@ -10,6 +10,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input'
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatTableModule} from '@angular/material/table';
 
 import { DOEFactorMatrixComponent } from './components/doefactor-matrix/doefactor-matrix.component';
 import { BatchCreationComponent } from './components/batch-creation/batch-creation.component';
@@ -32,6 +33,7 @@ import { BatchCreationComponent } from './components/batch-creation/batch-creati
     MatSelectModule,
     MatButtonModule,
     MatIconModule,
+    MatTableModule,
     MatAutocompleteModule,
     
   ],

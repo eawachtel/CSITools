@@ -1,14 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { values } from 'lodash';
+import * as _ from 'lodash';
 
 import * as Papa from 'papaparse';
 import { ExportToCsv } from 'export-to-csv';
+import { cloneDeep } from 'lodash';
+
+const batchMatrix2 = [
+  {attribute: 'test', baselineValue: null, values: '150, 200'}
+]
 
 @Component({
   selector: 'batch-creation',
   templateUrl: './batch-creation.component.html',
   styleUrls: ['./batch-creation.component.css']
 })
+
+
 export class BatchCreationComponent implements OnInit {
 
   batchMatrix: any[] = [];
@@ -16,15 +23,19 @@ export class BatchCreationComponent implements OnInit {
   designMatrix: any[] = [];
   excludedKeyStrings: string[] = ['', 'Response 1']
   excludedValueStrings: string[] = ['Run', 'R1']
+  exportIsDisabled:boolean = true;
   inputs: string[] = [];
   inputDict: any = {};
   functionInputFactors: any[] = ['JackscrewAdjustLR', 'JackscrewAdjustRR'];
+  displayedColumns: string[] = ['attribute', 'values'];
+  dataSource = batchMatrix2
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+ 
   public async processInputs(data:any[]) {
     let factorObj = data[0];
     //make dictionar of Factor Labels ie {Factor1:'LRSpring'}
@@ -118,6 +129,8 @@ export class BatchCreationComponent implements OnInit {
             });
             this.batchDict[key]['values'] = newValues;
             this.batchMatrix.push(this.batchDict[key])
+            this.batchMatrix = cloneDeep(this.batchMatrix)
+            this.exportIsDisabled = false;
           });
         }
       });

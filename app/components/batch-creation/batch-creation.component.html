@@ -21,8 +21,27 @@
   <div class='flex-row'>
     <span>
         <button mat-raised-button color="primary"
+          [disabled]="exportIsDisabled"
           (click) = "exportBatchMatrix();">Export Batch Matrix
         </button>
       </span>
   </div>
+</div>
+
+<div>
+  <table mat-table [dataSource]="batchMatrix" class="mat-elevation-z8 batch-table">
+    <!-- Position Column -->
+    <ng-container matColumnDef="attribute">
+      <th mat-header-cell *matHeaderCellDef> Attribute </th>
+      <td mat-cell *matCellDef="let element"> {{element.attribute}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="values">
+      <th mat-header-cell *matHeaderCellDef> Values </th>
+      <td mat-cell *matCellDef="let element"> {{element.values}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>  
+  </table>
 </div>

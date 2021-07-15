@@ -18,3 +18,22 @@
   span{
     padding:4px;
   }
+
+  .batch-table {
+    width: 100%;
+  }
+
+  .mat-column-attribute {
+    width: auto;
+    border-right: 1px solid currentColor;
+    padding-right: 24px;
+    text-align: center;
+  }
+
+  .mat-column-values {
+    width: auto;
+    border-right: 1px solid currentColor;
+    padding-left: 24px;
+    padding-right: 24px;
+    text-align: left;
+  }
