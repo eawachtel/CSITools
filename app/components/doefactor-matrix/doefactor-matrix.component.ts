@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+import { HttpClient } from '@angular/common/http';
 import * as Papa from 'papaparse';
 import { ExportToCsv } from 'export-to-csv';
 
@@ -13,14 +14,15 @@ import {inputDisplayNames} from '../../external-data/display-channel-list'
 })
 export class DOEFactorMatrixComponent implements OnInit {
 
+  exportIsDisabled:boolean = true;
   inputFactorMatrix: any[] = [];
   lowValue = '';
   highValue = '';
   channelOptions:string[] = inputDisplayNames;
   channelOptionsFiltered: string[] | undefined = this.channelOptions; 
-  
+  testString: string = '';
 
-  constructor() { 
+  constructor(private http: HttpClient) { 
     
   }
   
@@ -100,8 +102,27 @@ export class DOEFactorMatrixComponent implements OnInit {
     };
    
   const csvExporter = new ExportToCsv(options);
-   
-  csvExporter.generateCsv(this.inputFactorMatrix);
+  let exportTable: any[] = []
+  this.inputFactorMatrix.forEach((element) => {
+    let obj = {channel: null, 'unit': null, 'low':null, 'high':null};
+    obj.channel = element.channel;
+    obj.unit = element.unit;
+    obj.low = element.low;
+    obj.high = element.high;
+    exportTable.push(obj);
+    });
+  
+  csvExporter.generateCsv(exportTable);
   }
 
+
+ 
+  onClick() {
+    this.http.get<any>('http://127.0.0.1:5000/processbatchGET/testFilePath').subscribe(data => {
+      this.testString = data;
+      
+    });
+  }
 }
+
+

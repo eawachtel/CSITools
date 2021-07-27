@@ -17,17 +17,18 @@
           </button>
       </span>
       
-  </div>
-  <div class='flex-row'>
-    <span>
-        <button mat-raised-button color="primary"
-          [disabled]="exportIsDisabled"
-          (click) = "exportBatchMatrix();">Export Batch Matrix
-        </button>
-      </span>
+  
+    <div class='flex-row'>
+      <span>
+          <button mat-raised-button color="primary"
+            [disabled]="exportIsDisabled"
+            (click) = "exportBatchMatrix();">Export Batch Matrix
+          </button>
+        </span>
+    </div>
   </div>
 </div>
-
+&nbsp;
 <div>
   <table mat-table [dataSource]="batchMatrix" class="mat-elevation-z8 batch-table">
     <!-- Position Column -->
