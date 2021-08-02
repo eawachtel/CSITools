@@ -24,16 +24,17 @@
   }
 
   .mat-column-attribute {
-    width: auto;
+    max-width: 20vw;
     border-right: 1px solid currentColor;
     padding-right: 24px;
     text-align: center;
   }
 
   .mat-column-values {
-    width: auto;
+    max-width: 80vw;
     border-right: 1px solid currentColor;
     padding-left: 24px;
     padding-right: 24px;
     text-align: left;
+    word-wrap: break-word;
   }

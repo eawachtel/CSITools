@@ -91,10 +91,12 @@ export class BatchCreationComponent implements OnInit {
   }
 
   dialogValues(){
+    let test = this.batchDict;
+    let commonValsList: any[] = [];
     //find common values in dialogInputFactors and create list of object that has initial 1,2,3 ect values in them
     let commonVals = _.intersection(this.dialogInputFactors, this.inputFactorList)
     if (commonVals.length > 0){
-      let commonValsList: any[] = [];
+      
       commonVals.forEach((item) => {
         commonValsList.push(
           {
@@ -108,10 +110,15 @@ export class BatchCreationComponent implements OnInit {
       let uniqueValueList: any = [];
       commonValsList.forEach((item) => {
         let uniqueVals:any = [...new Set(item.values)].sort();
+        let isLoadedList:boolean[] = [];
+        uniqueVals.forEach((value:any) =>{
+          isLoadedList.push(false)
+        });
         uniqueValueList.push(
           {
             channel:item.channel,
-            values: uniqueVals
+            values: uniqueVals,
+            isLoaded: isLoadedList
           }
         )
       });
@@ -123,16 +130,44 @@ export class BatchCreationComponent implements OnInit {
         newChannels.forEach((channel: any) => {
           newChannelsDict[channel] = 
             {
-              channels: channel,
+              attribute: channel,
               baselineValue: null,
               values: element.values,
               unit: null}
             }
           )
         });
-      
-      console.log(newChannelsDict);
       this.openDialog(uniqueValueList, newChannelsDict)
+    }
+
+    //Test and write all values not in commonVals
+    Object.keys(this.batchDict).forEach((key:any) => {
+      if (!this.dialogInputFactors.includes(key)) {
+        this.batchMatrix.push(this.batchDict[key])
+      } 
+    });
+
+    if (commonVals.length === 0 && this.batchMatrix.length > 0){
+      this.setStringValues();
+    }
+  }
+
+  setStringValues(){
+    this.batchMatrix.forEach((item) => {
+      let values = item.values;
+      let string = ''
+      values.forEach((value:any, index:number) => {
+        if (index === 0){
+          string = string + value.toString();
+        } else {
+          string = string + ', ' + value.toString();
+        }
+      });
+      item.values = string;
+    })
+    this.batchMatrix = cloneDeep(this.batchMatrix);
+    if (this.batchMatrix.length > 0) {
+      this.exportIsDisabled = false;
     }
   }
 
@@ -141,7 +176,7 @@ export class BatchCreationComponent implements OnInit {
     const dialogRef = this.dialog.open(SubmitDialogComponent, {
       width: '600px',
       data: {uniqueValueList: uniqueValueList, 
-        newChannelsDict: newChannelsDict
+          newChannelsDict: newChannelsDict
         }
       });
 
@@ -149,8 +184,12 @@ export class BatchCreationComponent implements OnInit {
       if (result === undefined) {
         alert('Dialog Closed No Files Loaded')
       } else {
-        let test = result.data;
+        let returnData = result.data;
+        returnData.forEach((item:any[]) => {
+          this.batchMatrix.push(item)
+        })
       }
+      this.setStringValues();
     });
   }
 
@@ -160,7 +199,6 @@ export class BatchCreationComponent implements OnInit {
           switch(batchKey) {
             case 'JackscrewAdjustLR':
               this.batchDict[batchKey]['values'] = this.jackscrewScale(this.batchDict[batchKey]['values']);
-              console.log(this.batchDict)
               break;
             case 'JackscrewAdjustRR':
               this.batchDict[batchKey]['values'] = this.jackscrewScale(this.batchDict[batchKey]['values']);
@@ -192,27 +230,14 @@ export class BatchCreationComponent implements OnInit {
         complete: async (result) => {
           await this.processInputs(result.data); // get input factors in a list and add to batchmatrix as row
           await this.processValues(result.data); // get values and enter into array in batchmatrix
-          await this.dialogValues(); // Dialog to get needed parts definitions
-          // await this.processFunctions(); // run functions on channels requiring addition channel defs ie. FARB ARMS, Jackscrew ect
-          // Object.keys(this.batchDict).forEach((key:any) => {
-          //   let valuesArr = this.batchDict[key]['values'];
-          //   let newValues = '';
-          //   valuesArr.forEach((element:any, index:number) => {
-          //     if (index !== 0) {
-          //     newValues = newValues + ', ' + element.toString()
-          //     } else {
-          //       newValues = newValues + element.toString()
-          //     } 
-          //   });
-          //   this.batchDict[key]['values'] = newValues;
-          //   this.batchMatrix.push(this.batchDict[key])
-          //   this.batchMatrix = cloneDeep(this.batchMatrix)
-          //   this.exportIsDisabled = false;
+          await this.processFunctions(); // run functions on channels requiring addition channel defs ie. FARB ARMS, Jackscrew ect
+          let test = this.batchDict;
+          this.dialogValues(); // Dialog to get needed parts definitions
         }
           });
     
       
-      console.log(this.batchMatrix)
+      
     } else {
       alert('Problem loading CSV file');
     }

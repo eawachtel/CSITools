@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import { HttpClient } from '@angular/common/http';
 import * as Papa from 'papaparse';
 import { ExportToCsv } from 'export-to-csv';
@@ -44,6 +43,9 @@ export class DOEFactorMatrixComponent implements OnInit {
   addFactor(){
     let factorObj: any = {channel:'', unit:'', low: null, high: null, channelOptionsFiltered: this.channelOptions};
     this.inputFactorMatrix.push(factorObj);
+    if (this.inputFactorMatrix.length > 0) {
+      this.exportIsDisabled = false;
+    }
   }
 
   onChannelSelect(i:number) {
@@ -53,6 +55,9 @@ export class DOEFactorMatrixComponent implements OnInit {
 
   deleteFactor(i:number){
     this.inputFactorMatrix.splice(i, 1);
+    if (this.inputFactorMatrix.length === 0) {
+      this.exportIsDisabled = true;
+    }
   }
 
   addChannel(channel:string, i:number) {
@@ -79,11 +84,16 @@ export class DOEFactorMatrixComponent implements OnInit {
           // Add filtered channel options so instance of object is full with all names avail
           this.inputFactorMatrix.forEach((element) => {
             element['channelOptionsFiltered'] = this.channelOptions; 
-          })
+          });
+          if (this.inputFactorMatrix.length > 0) {
+            this.exportIsDisabled = false;
+          }
         }});
+    
     } else {
       alert('Problem loading CSV file');
     }
+    
   }
 
   exportFactorMatrix(){
