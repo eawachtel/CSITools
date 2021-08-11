@@ -18,5 +18,39 @@ export const partsDefList: any = {
             'LCAARBRFY',
             'LCAARBRFZ'
         ]
+    },
+    'LFUCASlugs': {channels:
+        [
+            'ChassisUCAAftLFX',
+            'ChassisUCAAftLFY',
+            'ChassisUCAAftLFZ',
+            'ChassisUCAForeLFX',
+            'ChassisUCAForeLFY',
+            'ChassisUCAForeLFZ'
+        ]
+    },
+    'RFUCASlugs': {channels:
+        [
+            'ChassisUCAAftRFX',
+            'ChassisUCAAftRFY',
+            'ChassisUCAAftRFZ',
+            'ChassisUCAForeRFX',
+            'ChassisUCAForeRFY',
+            'ChassisUCAForeRFZ'
+        ]
+    },
+    'LFUCA': {channels:
+        [
+            'UCAUBJLFX',
+            'UCAUBJLFY',
+            'UCAUBJLFZ'
+        ]
+    },
+    'RFUCA': {channels:
+        [
+            'UCAUBJRFX',
+            'UCAUBJRFY',
+            'UCAUBJRFZ'
+        ]
     }
 }

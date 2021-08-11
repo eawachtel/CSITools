@@ -93,7 +93,7 @@ public addCSVData(files: any) {
     channelList.forEach((displayChannel:any) => {
       let paramMapObj = inputDisplayNames[displayChannel];
       let value = csvDict[paramMapObj.WorkflowName];
-      let scaleValue = (+value * +paramMapObj.Scale).toFixed(2).toString();
+      let scaleValue = (+value * +paramMapObj.Scale).toFixed(3).toString();
       let baseValues = this.newChannelsDict[displayChannel].values;
       let testValue = this.uniqueValueList[i].values[j];
       let updatedValues: string[] = [];

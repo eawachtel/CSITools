@@ -35,7 +35,7 @@ export class BatchCreationComponent implements OnInit {
   inputFactorList: string[] = [];
   inputDict: any = {};
   functionInputFactors: any[] = ['JackscrewAdjustLR', 'JackscrewAdjustRR'];
-  dialogInputFactors: string[] = ['LFFARBArm', 'RFFARBArm']
+  dialogInputFactors: string[] = ['LFFARBArm', 'RFFARBArm', 'LFUCASlugs', 'RFUCASlugs', 'LFUCA', 'RFUCA']
   displayedColumns: string[] = ['attribute', 'values'];
   dataSource = batchMatrix2
 
@@ -96,7 +96,6 @@ export class BatchCreationComponent implements OnInit {
     //find common values in dialogInputFactors and create list of object that has initial 1,2,3 ect values in them
     let commonVals = _.intersection(this.dialogInputFactors, this.inputFactorList)
     if (commonVals.length > 0){
-      
       commonVals.forEach((item) => {
         commonValsList.push(
           {
