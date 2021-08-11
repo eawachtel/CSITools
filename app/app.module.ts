@@ -13,7 +13,7 @@ import {MatInputModule} from '@angular/material/input'
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
-
+import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DOEFactorMatrixComponent } from './components/doefactor-matrix/doefactor-matrix.component';
 import { BatchCreationComponent } from './components/batch-creation/batch-creation.component';
 import { SubmitDialogModule } from '../app/components/submit-dialog/submit-dialog.module';
@@ -40,7 +40,8 @@ import { SubmitDialogModule } from '../app/components/submit-dialog/submit-dialo
     MatTableModule,
     MatAutocompleteModule,
     MatDialogModule,
-    SubmitDialogModule
+    SubmitDialogModule,
+    ClipboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

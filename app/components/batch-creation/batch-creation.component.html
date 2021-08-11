@@ -26,6 +26,11 @@
           </button>
         </span>
     </div>
+    <span>
+      <button mat-raised-button color="primary"
+      [disabled]="exportIsDisabled"
+      (click)="copyToClipBoard()">Copy Table to Clipboard</button>
+    </span>
   </div>
 </div>
 &nbsp;

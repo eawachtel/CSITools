@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-
+import { Clipboard } from '@angular/cdk/clipboard';
 import { SubmitDialogComponent } from '../submit-dialog/submit-dialog.component';
 import * as _ from 'lodash';
 import * as Papa from 'papaparse';
@@ -39,7 +39,9 @@ export class BatchCreationComponent implements OnInit {
   displayedColumns: string[] = ['attribute', 'values'];
   dataSource = batchMatrix2
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private clipboard: Clipboard) { 
+    
+  }
 
   ngOnInit(): void {
   }
@@ -263,5 +265,14 @@ export class BatchCreationComponent implements OnInit {
 
   }
 
+  copyToClipBoard() {
+    let batchMatrix = this.batchMatrix;
+    let string = '';
+    batchMatrix.forEach((item) => {
+      let subString = item.attribute.toString() + '\t' + ' ' + '\t' + item.values + '\r';
+      string = string + subString;
+  });
+    this.clipboard.copy(string);
+  }
 }
 
