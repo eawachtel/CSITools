@@ -1,0 +1,36 @@
+
+<div>
+  <mat-toolbar color="primary">
+    <span>CSI Tools</span>
+  </mat-toolbar>
+
+  <div>  
+    <mat-form-field appearance="fill" >
+      <mat-label>Select an App</mat-label>
+      <mat-select [(value)]="selectedApp">
+        <mat-option value="Spring Spline Builder">Spring Spline Builder</mat-option>
+        <mat-option value="DOE">DOE</mat-option>
+        <mat-option value="Single Metric">Single Run Metric</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="selectedApp === 'DOE'">
+    <mat-form-field appearance="fill" >
+      <mat-label>Select an App Function</mat-label>
+      <mat-select [(value)]="selectedAppFunction">
+        <mat-option value="DOE Factor Matrix">Factor Matrix</mat-option>
+        <mat-option value="PM Batch Creation">PM Batch Creation</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="column">
+    <doefactor-matrix *ngIf="selectedAppFunction ==='DOE Factor Matrix' && selectedApp === 'DOE'"></doefactor-matrix>
+    <batch-creation *ngIf="selectedAppFunction ==='PM Batch Creation' && selectedApp === 'DOE'"></batch-creation>
+  </div>
+</div>
+
+<div *ngIf="selectedApp === 'Spring Spline Builder'">
+  <spring-spline-builder *ngIf="selectedApp ==='Spring Spline Builder'"></spring-spline-builder>
+</div>
+
